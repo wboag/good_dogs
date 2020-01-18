@@ -32,19 +32,25 @@ def theyre_good_dogs_brent():
     ratings_file = os.path.join(base_dir, 'data', 'we_rate_dogs.tsv')
     with open(ratings_file, 'r') as f:
         ratings = []
-        keys = f.readline().strip('\n\r').split('\t')
+        keys = f.readline().strip('\n').strip('\t').split('\t')
         for line in f.readlines():
-            line = clean_text(line)
-            toks = line.strip('\n\r').split('\t')
-            assert len(keys) == len(toks)
+            #line = clean_text(line)
+            toks = line.strip('\n').strip('\t').split('\t')
+            #print(line)
+            #print(line.split('\t'))
+            #print(line.split('\\t'))
+            #print(keys)
+            #print(toks)
+            #assert len(keys) == len(toks)
             dog = dict(zip(keys,toks))
+            #dog['Rating'] = int(dog['Rating'].split('/')[0])
             ratings.append(dog)
     return ratings
 
 
 def clean_text(text):
     try:
-        return text.encode('ascii', 'ignore')
+        val = text.encode('ascii', 'ignore')
     except Exception as e:
         ret = []
         for c in text:
@@ -52,4 +58,5 @@ def clean_text(text):
                 ret.append(c.encode('ascii', 'ignore'))
             except Exception as f:
                 pass
-        return ''.join(ret)
+        val = ''.join(ret)
+    return str(val)

@@ -16,9 +16,9 @@ def main():
     generator = build_generator()
     names = ['Willie', 'Peter', 'Andrew', 'Neil', 'Dom', 'Maggie', 'Alyssa', 'Beth', 'Katie']
     for name in names:
-        print generator.rate(name), name
-    print '\n'
-    print generator.rate(sys.argv[1])
+        print(generator.rate(name), name)
+    print('\n')
+    print(generator.rate(sys.argv[1]))
 
 
 
@@ -48,7 +48,7 @@ class RatingGenerator:
 
     def fit(self, names, ratings):
         # Extract features from names for prediction
-        features = map(extract_name_features,names)
+        features = list(map(extract_name_features,names))
 
         # Extract numeric ratings
         Y = np.array([int(re.search('(\d+)/10', rating).groups()[0]) for rating in ratings])
@@ -74,7 +74,7 @@ class RatingGenerator:
 
 def extract_name_features(name):
     features = defaultdict(int)
-    features['len'] = len(name)
+    features[('len',)] = len(name)
     name = name.lower()
     for n in [1,2,3,4]:
         for i in range(len(name)-n+1):
@@ -93,10 +93,10 @@ class TextGenerator:
         self._ends = defaultdict(list)
 
         for name,text in zip(names,texts):
-            print name
+            print(name)
             for sent in nltk.sent_tokenize(text):
-                print '\t', sent
-            print
+                print('\t', sent)
+            print()
 
             sents = nltk.sent_tokenize(text)
 
@@ -114,9 +114,9 @@ class TextGenerator:
 
             # relevant description?
             end = '\n'.join(sents[index:]).replace('%d/10'%score, '__score__')
-            print end
+            print(end)
 
-        print '\n\n'
+        print('\n\n')
 
 
 
@@ -127,7 +127,7 @@ def find_rating(lines):
 
 
 def build_ngrams(text):
-    print text
+    print(text)
     exit()
 
 

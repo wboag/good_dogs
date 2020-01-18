@@ -1,6 +1,8 @@
 
 import numpy as np
-import pylab as plt
+#import pylab as plt
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import sys
 from collections import defaultdict
 
@@ -55,18 +57,18 @@ def main():
 
 
     # population statistics
-    print
+    print()
     rv = np.array(ratings)
     pop_mu    = rv.mean()
     pop_sigma = rv.std()
-    print 'mu:', pop_mu
-    print 'sigma:', pop_sigma
+    print('mu:', pop_mu)
+    print('sigma:', pop_sigma)
     pop_N = len(ratings)
     lo = pop_mu - 2*pop_sigma - .02
     hi = pop_mu + 2*pop_sigma + .02
     pop_2sigma = len([r for r in ratings if (lo <= r <= hi)])
-    print '[%.3f,%.3f]  %d/%d (%.4f)' % (lo,hi,pop_2sigma,pop_N,float(pop_2sigma)/pop_N)
-    print
+    print('[%.3f,%.3f]  %d/%d (%.4f)' % (lo,hi,pop_2sigma,pop_N,float(pop_2sigma)/pop_N))
+    print()
 
     if '--hist' in sys.argv:
         plt.hist(ratings, bins=100)
@@ -78,12 +80,12 @@ def main():
         exit()
 
 
-    print
+    print()
     for neighborhood,rs in sorted(neighborhood_ratings.items(), key=lambda t:np.array(t[1]).mean()):
         R = np.array(rs)
         N = len(rs)
-        print '%-22s(%3d)  %.3f %.3f %.3f %.5f' % (neighborhood, N, R.min(), R.max(), R.mean(), R.std())
-    print
+        print('%-22s(%3d)  %.3f %.3f %.3f %.5f' % (neighborhood, N, R.min(), R.max(), R.mean(), R.std()))
+    print()
 
     # intensity based on colors
     ratings_np = np.array(ratings)
@@ -96,9 +98,9 @@ def main():
     Z = R**1 / R.std()
     intensity = Z / (Z.max()-Z.min())
     #intensity = Z
-    print intensity
-    print intensity.min(), intensity.max()
-    print intensity.mean(), intensity.std()
+    print(intensity)
+    print(intensity.min(), intensity.max())
+    print(intensity.mean(), intensity.std())
     #exit()
 
     #colors = intensity*255
@@ -128,7 +130,8 @@ def main():
     mu_x = X.mean()
     mu_y = Y.mean()
 
-    img = plt.imread('../data/map_cambridge.png')
+    #img = plt.imread('../data/map_cambridge.png')
+    img = mpimg.imread('../data/map_cambridge.png')
     fig, ax = plt.subplots()
     ax.imshow(img)
 
@@ -154,8 +157,8 @@ def main():
     colors = colors[ids]
     '''
 
-    print colors
-    print len(colors)
+    print(colors)
+    print(len(colors))
 
     #ax.scatter(X, Y, c=colors, alpha=0.1)
     ax.scatter(X, Y, c=colors, alpha=1)
